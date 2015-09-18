@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head> 
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>Aim CSE</title>
+		<meta name="description" content="Aim CSE Student Club" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!-- Top Navigation -->
+			<header class="codrops-header" action="post.php" method="post">
+				<h1>Aim CSE <span>Working commitee</span></h1>	
+			</header>
+			<section>
+				<form id="theForm" class="simform" autocomplete="off">
+					<div class="simform-inner">
+						<ol class="questions">
+							<li>
+								<span><label for="q1">Thanks for interest in joining. What's your <b>first name?</b></label></span>
+								<input id="q1" name="q1" type="text"/>
+							</li>
+							<li>
+								<span><label for="q2">Last name?</label></span>
+								<input id="q2" name="q2" type="text"/>
+							</li>
+							<li>
+								<span><label for="q3">What's your <b>registration number?</b></label></span>
+								<input id="q3" name="q3" type="text"/>
+							</li>
+							<li>
+								<span><label for="q4">And what's your <b>email?</b></label></span>
+								<input id="q4" name="q4" type="text"/>
+							</li>
+							<li>
+								<span><label for="q5">Your <b>telephone number?</b></label></span>
+								<input id="q5" name="q5" type="text"/>
+							</li>
+							<li>
+								<span><label for="q6">What do you think you are best at?<b>(Web Development/Designing/Public Relations/Technical/Event Management)</b></label></span>
+								<input id="q6" name="q6" type="text"/>
+							</li>
+							<li>
+								<span><label for="q7">Any <b>past experiences?</b></label></span>
+								<input id="q7" name="q7" type="text"/>
+							</li>
+						</ol><!-- /questions -->
+						<button class="submit" type="submit">Send answers</button>
+						<div class="controls">
+							<button class="next"></button>
+							<div class="progress"></div>
+							<span class="number">
+								<span class="number-current"></span>
+								<span class="number-total"></span>
+							</span>
+							<span class="error-message"></span>
+						</div><!-- / controls -->
+					</div><!-- /simform-inner -->
+					<span class="final-message"></span>
+				</form><!-- /simform -->			
+			</section>
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/stepsForm.js"></script>
+		<script>
+			var theForm = document.getElementById( 'theForm' );
+
+			new stepsForm( theForm, {
+				onSubmit : function( form ) {
+					var q1 = document.getElementById('q1').value;
+					var q2 = document.getElementById('q2').value;
+					var q3 = document.getElementById('q3').value;
+					var q4 = document.getElementById('q4').value;
+					var q5 = document.getElementById('q5').value;
+					var q6 = document.getElementById('q6').value;
+					var q7 = document.getElementById('q7').value;
+
+
+					var myDataRef = new Firebase('aimcse.firebaseio.com');
+					myDataRef.push({First: q1, Last: q2, Email: q4, RegistrationNumber:q3, Phone:q5, Skills:q6, Past:q7});
+					console.log("Reached here!");
+					
+
+					console.log(q1);
+					// hide form
+					classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
+
+					/*
+					form.submit()
+					or
+					AJAX request (maybe show loading indicator while we don't have an answer..)
+					*/
+
+					// let's just simulate something...
+					var messageEl = theForm.querySelector( '.final-message' );
+					messageEl.innerHTML = 'We are stoked to have you apply for the club! You will hear from us soon.';
+					console.log("You have reached the end!");
+					classie.addClass( messageEl, 'show' );
+				}
+			} );
+		</script>
+	</body>
+
+</html>
